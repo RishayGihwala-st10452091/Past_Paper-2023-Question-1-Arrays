@@ -1,38 +1,56 @@
+/* means this class agrees to follow the interface’s contract,
+   so it must write code for all the methods listed in the interface. */
 public class EstateAgent implements IEstateAgent {
 
+    // This method prints everything
     public void generateEstateAgentSalesReport() {
 
+        // 1D Array to store the estate agent names.
+                             // 0           1
         String[] agents = {"Joe Bloggs", "Jane Doe"};
 
+        // 2D Array ( rows and columns )
+        // Each row belongs to one agent
+        // Each column is a months sale
         double[][] propertySales = {
-                {800000, 1500000, 2000000},
-                {700000, 1200000, 1600000}
+                // 3 Columns
+                // Jan  ,  Feb   ,  Mar
+                {800000, 1500000, 2000000}, // Joe Bloggs
+                {700000, 1200000, 1600000}  // Jane Doe          // 2 Rows
         };
 
+        // 1D Array store the months names
         String[] months = {"JAN", "FEB", "MAR"};
 
+        // Outputs the title of the report with a blank line below
         System.out.println("Estate Agent Sales Report");
         System.out.println();
 
+        // Adds space before the first month
         System.out.print("            ");
+        // Loops through each month name and prints it
         for (String month : months) {
             System.out.print(month + "    ");
         }
         System.out.println();
 
-        // Array to store the total sales for each agent (one value per agent)
+        // Made a new array to hold the total sales per agent.
+        // the ( agents.length ) ensures that there is one total for each agent.
         double[] totalSalesPerAgent = new double[agents.length];
 
-        // Outer loop: go through each agent (each row of the 2D array)
+        // Nested loop to print the sales per agent
+
+        // Outer loop (i) goes through each agent (row)
         for (int i = 0; i < agents.length; i++) {
             System.out.print(agents[i] + "   ");
 
-            // Inner loop: print each month's sales for this agent (each column)
+            // Inner loop (j) goes through each sale for that agent (column)
             for (int j = 0; j < propertySales[i].length; j++) {
+                // propertySales[i][j] accesses a single sale and (long) = neatness
                 System.out.print("R " + (long) propertySales[i][j] + "   ");
             }
 
-            // Use the interface method to calculate the total for this agent (sum of the row)
+            // Use the interface method to calculate the total sales for that agents row.
             totalSalesPerAgent[i] = EstateAgentSales(propertySales[i]);
 
             // Move to next line for the next agent
@@ -44,7 +62,8 @@ public class EstateAgent implements IEstateAgent {
         // Print the totals and the 2% commission for each agent
         for (int i = 0; i < agents.length; i++) {
             System.out.println("Total property sales for " + agents[i] + " = R" + (long) totalSalesPerAgent[i]);
-            double commission = EstateAgentCommission(totalSalesPerAgent[i]); // 2%
+            // EstateAgentCommission method to calculate the 2%
+            double commission = EstateAgentCommission(totalSalesPerAgent[i]);
             System.out.println("Sales Commission for " + agents[i] + " = R" + (long) commission);
             System.out.println();
         }
